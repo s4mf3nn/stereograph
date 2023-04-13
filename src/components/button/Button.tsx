@@ -1,3 +1,3 @@
-export default function Button() {
+export function Button() {
   return <button>Click me!</button>;
 }
