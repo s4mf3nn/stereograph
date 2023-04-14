@@ -1,7 +1,7 @@
 import { Column } from "react-table";
-import { Button, Checkbox, Table } from "../components";
+import { Button, Checkbox, Modal, Table } from "../components";
 import db from '../utils/db.json';
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 
 interface Item {
   id: number,
@@ -34,6 +34,7 @@ export default function Home() {
   const [data, setData] = useState<Item[]>([]);
   const [dataCopy, setDataCopy] = useState<Item[]>([]);
   const [isLoading, setIsloading] = useState<boolean>(true);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [filters, setFilters] = useState<any>({ // TODO: Solve any
     'En attente': true,
     'En cours': true,
@@ -91,35 +92,65 @@ export default function Home() {
     });
   };
 
+  const openModal = () => {
+    document.body.style.overflowY = "hidden";
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    document.body.style.overflowY = "scroll";
+    setModalIsOpen(false);
+  };
+
+  // Insert a new project
+  const handleSubmitForm = (name: string, description: string, comment: string) => {
+    const newItem = {
+      id: data.length + 1,
+      name,
+      step: "En attente",
+      description,
+      comment,
+    };
+    setData([...data, { ...newItem }]);
+    setDataCopy([...data, { ...newItem }]);
+  };
+
   if (isLoading) {
     return <div className="flex justify-center mt-48">Chargement...</div>;
   }
 
   return (
-    <div className="flex flex-col gap-4 m-4 mt-10 sm:m-10">
-      <h1 className="text-white font-semibold text-3xl">{data.length} Projet{data.length > 1 && "s"}</h1>
-      <div className="flex flex-col gap-4 sm:flex-row justify-between mb-4">
-        <div className="flex flex-row gap-3">
-          {["En attente", "En cours", "Terminé"].map((label, i) => {
-            return (
-              <Checkbox
-                key={i}
-                label={label}
-                isChecked={filters[label]}
-                handleClick={handleClickFilter}
-              />
-            );
-          })}
+    <>
+      <div className="flex flex-col gap-4 m-4 mt-10 sm:m-10">
+        <h1 className="text-white font-semibold text-3xl">{data.length} Projet{data.length > 1 && "s"}</h1>
+        <div className="flex flex-col gap-4 sm:flex-row justify-between mb-4">
+          <div className="flex flex-row gap-3">
+            {["En attente", "En cours", "Terminé"].map((label, i) => {
+              return (
+                <Checkbox
+                  key={i}
+                  label={label}
+                  isChecked={filters[label]}
+                  handleClick={handleClickFilter}
+                />
+              );
+            })}
+          </div>
+          <div>
+            <Button onClick={openModal}>Ajouter un projet</Button>
+          </div>
         </div>
-        <div>
-          <Button>Ajouter un projet</Button>
-        </div>
+        <Table
+          data={data}
+          columns={columns as Column[]}
+          handleDelete={handleDelete}
+        />
       </div>
-      <Table
-        data={data}
-        columns={columns as Column[]}
-        handleDelete={handleDelete}
+      <Modal
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+        handleSubmitForm={handleSubmitForm}
       />
-    </div>
+    </>
   );
 }
