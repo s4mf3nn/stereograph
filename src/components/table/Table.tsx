@@ -2,14 +2,33 @@ import { useMemo } from 'react';
 import { useTable, Column, useGlobalFilter } from 'react-table';
 import { Status } from './..';
 import { Trash2 } from 'react-feather';
+import { Item } from '../../types/common.type';
 
 interface ReactTableProps<T extends object> {
   data: T[];
-  columns: Column<T>[];
   handleDelete: (index: number) => void;
 }
 
-export function Table<T extends object>({ data, columns, handleDelete }: ReactTableProps<T>): React.ReactElement {
+const columns = [
+  {
+    Header: 'Nom',
+    accessor: 'name',
+  },
+  {
+    Header: 'Etape',
+    accessor: 'step',
+  },
+  {
+    Header: 'Description',
+    accessor: 'description',
+  },
+  {
+    Header: 'Commentaire',
+    accessor: 'comment',
+  },
+];
+
+export function Table<T extends object>({ data, handleDelete }: ReactTableProps<T>): React.ReactElement {
   const dataTable = useMemo(
     () => data, [data]
   );
@@ -25,6 +44,12 @@ export function Table<T extends object>({ data, columns, handleDelete }: ReactTa
     rows,
     prepareRow,
   } = useTable({ columns: columnsTable, data: dataTable }, useGlobalFilter);
+
+  // TODO: Create a modal that display the project info
+  const displayProject = (project: Item) => {
+    const { name, step, description, comment } = project;
+    alert(`Nom: ${name}, étape: ${step}, description: ${description}, commentaire: ${comment}`);
+  };
 
   return (
     <div className="relative overflow-x-auto bg-[#181818] rounded-2xl">
@@ -44,11 +69,11 @@ export function Table<T extends object>({ data, columns, handleDelete }: ReactTa
           {rows.map((row: any) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className="border-b border-[#262626] transition hover:bg-[#282828] cursor-pointer">
+              <tr {...row.getRowProps()} className="border-b border-[#262626] transition hover:bg-[#282828]">
                 {row.cells.map((cell: any) => {
                   return (
                     <td {...cell.getCellProps()} className="px-4 py-4">
-                      {cell.column.id === "name" && <p className="text-white">{cell.render('Cell')}</p>}
+                      {cell.column.id === "name" && <p className="text-white cursor-pointer hover:underline" onClick={() => displayProject(row.original)}>{cell.render('Cell')}</p>}
                       {cell.column.id === "step" && <Status type={cell.row.values.step} />}
                       {cell.column.id === "description" && <p className="text-white">{cell.render('Cell')}</p>}
                       {cell.column.id === "comment" && (

@@ -1,34 +1,7 @@
-import { Column } from "react-table";
+import { useEffect, useState } from "react";
 import { Button, Checkbox, Modal, Table } from "../components";
 import db from '../utils/db.json';
-import { SyntheticEvent, useEffect, useState } from "react";
-
-interface Item {
-  id: number,
-  name: string;
-  step: string;
-  description: string;
-  comment: string;
-}
-
-const columns = [
-  {
-    Header: 'Nom',
-    accessor: 'name',
-  },
-  {
-    Header: 'Etape',
-    accessor: 'step',
-  },
-  {
-    Header: 'Description',
-    accessor: 'description',
-  },
-  {
-    Header: 'Commentaire',
-    accessor: 'comment',
-  },
-];
+import { Item } from '../types/common.type';
 
 export default function Home() {
   const [data, setData] = useState<Item[]>([]);
@@ -136,13 +109,11 @@ export default function Home() {
               );
             })}
           </div>
-          <div>
-            <Button onClick={openModal}>Ajouter un projet</Button>
-          </div>
+          <div><Button onClick={openModal}>Ajouter un projet</Button></div>
         </div>
         <Table
           data={data}
-          columns={columns as Column[]}
+          // columns={columns as Column[]}
           handleDelete={handleDelete}
         />
       </div>
