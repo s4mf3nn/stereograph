@@ -31,8 +31,8 @@ export function Modal({ modalIsOpen, closeModal, handleSubmitForm }: ModalProps)
   };
 
   return (
-    <div ref={overlay} id="overlay" className={`${modalIsOpen ? "flex-col" : "hidden"} absolute w-full h-screen align-middle justify-center top-0 right-0 bottom-0 left-0 m-auto bg-black bg-opacity-30`}>
-      <div className="absolute bg-[#00be96] align-middle justify-center top-0 sm:top-[-100px] sm:right-0 sm:bottom-0 sm:left-0 w-full h-screen sm:m-auto sm:w-[468px] sm:h-fit sm:rounded-2xl">
+    <div ref={overlay} id="overlay" className={`${modalIsOpen ? "flex-col" : "hidden"} absolute w-full h-screen align-middle justify-center top-0 right-0 bottom-0 left-0 m-auto bg-white bg-opacity-10`}>
+      <div className="absolute bg-black align-middle justify-center top-0 sm:top-[-100px] sm:right-0 sm:bottom-0 sm:left-0 w-full h-screen sm:m-auto sm:w-[468px] sm:h-fit sm:rounded-2xl">
         <div onClick={closeModal} className="absolute right-0 m-5 cursor-pointer">
           <X className="text-white" />
         </div>
@@ -40,8 +40,8 @@ export function Modal({ modalIsOpen, closeModal, handleSubmitForm }: ModalProps)
         <div className="mx-6 mt-8 mb-6">
           <form className="flex flex-col gap-5" onSubmit={handleSubmit} >
             <Input value={name} placeholder="Nom du projet" onChange={setName} />
-            <Input value={description} placeholder="Nom du projet" onChange={setDescription} />
-            <Input value={comment} placeholder="Nom du projet" onChange={setComment} />
+            <Input value={description} placeholder="Description" onChange={setDescription} />
+            <Input value={comment} placeholder="Commentaire" onChange={setComment} />
             <div className="flex justify-end mt-3">
               <Button>Créer le projet</Button>
             </div>

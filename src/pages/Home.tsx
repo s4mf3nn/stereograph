@@ -113,7 +113,6 @@ export default function Home() {
         </div>
         <Table
           data={data}
-          // columns={columns as Column[]}
           handleDelete={handleDelete}
         />
       </div>

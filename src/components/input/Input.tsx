@@ -11,7 +11,7 @@ export function Input({ value, placeholder, onChange }: InputProps) {
   return (
     <input
       required
-      className="outline-none bg-[#ffffff4f] rounded-xl p-3 w-full text-white placeholder:text-white"
+      className="outline-none bg-white bg-opacity-[9%] rounded-xl p-3 w-full text-white placeholder:text-white placeholder:text-opacity-50"
       type="text"
       value={value}
       placeholder={placeholder}
