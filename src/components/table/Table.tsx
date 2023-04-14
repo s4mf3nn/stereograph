@@ -27,13 +27,13 @@ export function Table<T extends object>({ data, columns, handleDelete }: ReactTa
   } = useTable({ columns: columnsTable, data: dataTable }, useGlobalFilter);
 
   return (
-    <div className="relative overflow-x-auto">
-      <table {...getTableProps()} className="text-left w-full">
+    <div className="relative overflow-x-auto bg-[#181818] rounded-2xl">
+      <table {...getTableProps()} className="text-left w-full min-w-[768px]">
         <thead>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()} className="border-b border-[#f1f3f4]">
+            <tr {...headerGroup.getHeaderGroupProps()} className="">
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()} className="font-medium text-sm text-slate-400 p-4">
+                <th {...column.getHeaderProps()} className="font-semibold text-sm text-[#8f8f8f] uppercase p-4">
                   {column.render('Header')}
                 </th>
               ))}
@@ -44,17 +44,19 @@ export function Table<T extends object>({ data, columns, handleDelete }: ReactTa
           {rows.map((row: any) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className="border-b border-[#f1f3f4]">
+              <tr {...row.getRowProps()} className="border-b border-[#262626] transition hover:bg-[#282828] cursor-pointer">
                 {row.cells.map((cell: any) => {
                   return (
-                    <td {...cell.getCellProps()} className="p-4">
-                      {cell.column.id === "name" && <p className="font-semibold text-slate-900">{cell.render('Cell')}</p>}
+                    <td {...cell.getCellProps()} className="px-4 py-4">
+                      {cell.column.id === "name" && <p className="text-white">{cell.render('Cell')}</p>}
                       {cell.column.id === "step" && <Status type={cell.row.values.step} />}
-                      {cell.column.id === "description" && <p className="font-semibold text-slate-900">{cell.render('Cell')}</p>}
+                      {cell.column.id === "description" && <p className="text-white">{cell.render('Cell')}</p>}
                       {cell.column.id === "comment" && (
-                        <span className="flex justify-between text-slate-500">
-                          <p className="italic">{cell.render('Cell')}</p>
-                          <button onClick={() => handleDelete(row.original.id)}><Trash2 className="w-5" /></button>
+                        <span className="flex justify-between items-center text-[#8f8f8f]">
+                          <p className="">{cell.render('Cell')}</p>
+                          <button className="bg-black px-3 py-1 rounded-lg flex items-center gap-2 text-xs font-semibold" onClick={() => handleDelete(row.original.id)}>
+                            <Trash2 className="w-4" />Supprimer
+                          </button>
                         </span>
                       )}
                     </td>

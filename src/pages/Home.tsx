@@ -1,5 +1,5 @@
 import { Column } from "react-table";
-import { Checkbox, Table } from "../components";
+import { Button, Checkbox, Table } from "../components";
 import db from '../utils/db.json';
 import { useEffect, useState } from "react";
 
@@ -96,18 +96,24 @@ export default function Home() {
   }
 
   return (
-    <div className="m-10 border-2 border-[#f1f3f4] rounded-xl bg-white">
-      <div className="">
-        {["En attente", "En cours", "Terminé"].map((label, i) => {
-          return (
-            <Checkbox
-              key={i}
-              label={label}
-              isChecked={filters[label]}
-              handleClick={handleClickFilter}
-            />
-          );
-        })}
+    <div className="flex flex-col gap-4 m-4 mt-10 sm:m-10">
+      <h1 className="text-white font-semibold text-3xl">{data.length} Projet{data.length > 1 && "s"}</h1>
+      <div className="flex flex-col gap-4 sm:flex-row justify-between mb-4">
+        <div className="flex flex-row gap-3">
+          {["En attente", "En cours", "Terminé"].map((label, i) => {
+            return (
+              <Checkbox
+                key={i}
+                label={label}
+                isChecked={filters[label]}
+                handleClick={handleClickFilter}
+              />
+            );
+          })}
+        </div>
+        <div>
+          <Button>Ajouter un projet</Button>
+        </div>
       </div>
       <Table
         data={data}

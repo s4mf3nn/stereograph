@@ -7,9 +7,8 @@ export default {
   argTypes: {},
 };
 
-export const Primary = {
+export const Overview = {
   args: {
-    variant: 'primary',
-    label: 'Rechercher',
+    children: 'Button',
   },
 };
