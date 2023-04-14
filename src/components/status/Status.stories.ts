@@ -3,8 +3,10 @@ import { Status } from "./Status";
 export default {
   title: 'Collections/Status',
   component: Status,
-  tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    isChecked: { control: 'boolean' },
+    type: { control: 'radio', options: ['En attente', 'En cours', 'Terminé'] }
+  },
 };
 
 export const Pending = {
@@ -16,11 +18,13 @@ export const Pending = {
 export const Ongoing = {
   args: {
     type: 'En cours',
+    isChecked: true,
   },
 };
 
 export const Completed = {
   args: {
     type: 'Terminé',
+    isChecked: true,
   },
 };

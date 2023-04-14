@@ -1,6 +1,7 @@
 import { SyntheticEvent, useRef, useState } from 'react';
 import { X } from 'react-feather';
 import { Button } from '../button/Button';
+import { Input } from '../input/Input';
 
 interface ModalProps {
   modalIsOpen: boolean;
@@ -38,10 +39,9 @@ export function Modal({ modalIsOpen, closeModal, handleSubmitForm }: ModalProps)
         <h2 className="m-4 ml-6 text-white text-xl">Créer un nouveau projet</h2>
         <div className="mx-6 mt-8 mb-6">
           <form className="flex flex-col gap-5" onSubmit={handleSubmit} >
-            {/** TODO Créer un composant réutilisable */}
-            <input required className="outline-none bg-[#ffffff4f] rounded-xl p-3 w-full text-white placeholder:text-white" type="text" value={name} placeholder="Nom du projet" onChange={(e) => setName(e.target.value)} />
-            <input required className="outline-none bg-[#ffffff4f] rounded-xl p-3 w-full text-white placeholder:text-white" type="text" value={description} placeholder="Description" onChange={(e) => setDescription(e.target.value)} />
-            <input required className="outline-none bg-[#ffffff4f] rounded-xl p-3 w-full text-white placeholder:text-white" type="text" value={comment} placeholder="Commentaire" onChange={(e) => setComment(e.target.value)} />
+            <Input value={name} placeholder="Nom du projet" onChange={setName} />
+            <Input value={description} placeholder="Nom du projet" onChange={setDescription} />
+            <Input value={comment} placeholder="Nom du projet" onChange={setComment} />
             <div className="flex justify-end mt-3">
               <Button>Créer le projet</Button>
             </div>
